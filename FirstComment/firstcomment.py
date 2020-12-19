@@ -1,13 +1,17 @@
 import requests
 import re, json
 from time import sleep
+
 from bs4 import BeautifulSoup
+
+class InvalidUrl(Exception):
+    '''Raise when the url is invalid'''
 
 def url2Id(url):
     try:
         return re.search(r"((?<=(v|V)/)|(?<=be/)|(?<=(\?|\&)v=)|(?<=embed/))([\w-]+)", url).group(0)
     except AttributeError:
-        raise Exception('Invalid URL')
+        raise InvalidUrl()
 
 class firstComment():
     def __init__(self, rawURL, wait=False):
